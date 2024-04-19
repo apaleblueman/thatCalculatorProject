@@ -1,74 +1,69 @@
-//variables
-let number1=0;
-let number2 = 0;
-let expression = [];
-let display = document.querySelector(".display");
-let displayValue = display.textContent;
-
-populateDisplay()
-
-//functions
-function populateDisplay(){
-    let button = document.querySelector(".keypad");
-    button.addEventListener('click', (event)=>{
+//global variables
+let firstNumber, secondNumber;
+let operator;
+const operations = ["add", "substract", "multiply", "divide","equate","clear"]
+const display = document.querySelector(".display");
+const keys = document.querySelector(".keypad");
+//main
+getInput()
+//functions acting in display
+function getInput(){
+    keys.addEventListener('click', (event)=>{
+        // display.textContent = "";
         let target = event.target;
-        display.textContent = target.textContent;
-        displayValue = display.textContent;
-        expression.push(displayValue);
-        });
-}
-//operations
-function add(a, b){
-    if(b!= null)
-        return a + b;
-    else
-        return a;
-}
-
-function substract(a, b){
-    if(b!= null)
-        return a - b;
-    else
-        return a;
-}
-
-function multiply(a, b){
-    if(b!= null)
-        return a * b;
-    else
-        return a;
-}
-function divide(a, b){
-    if(b!= null && b!==0)
-        return a / b;
-    else
-        return "invalid";
-}
-//compute
-function operate(num1,num2){
-    
-    let operator = document.querySelector(".operators");
-    operator.addEventListener('click', (event)=>{
-        let target = event.target;
-        switch(target.id){
-            case "add":
-                console.log(add(num1,num2));
-                break;
-            case "substract":
-                console.log(substract(num1,num2));
-                break;
-            case "multiply":
-                console.log(multiply(num1,num2));
-                break;
-            case "divide":
-                console.log(divide(num1,num2));
-                break;
-            case "equate":
-                console.log("=");
-                break;
-            default:
-                console.log("invalid")
-                break;
+        if(!operations.includes(target.id)){
+            display.textContent += target.textContent;
+            
         }
-    });
+        else if(operations.includes(target.id)){
+        if(/*target.id === "equate"*/ firstNumber!== undefined){
+                secondNumber = display.textContent;
+                display.textContent = "";
+                display.textContent = operate(firstNumber,"add",secondNumber);
+            }
+            else{
+                firstNumber = display.textContent;
+                display.textContent = "";
+            }
+        }
+    })
+}
+//functions
+
+function add(num1, num2){
+    return num1 + num2
+}
+function substract(num1, num2){
+    return num1 - num2
+}
+function multiply(num1, num2){
+    return num1 * num2
+}
+function divide(num1, num2){
+    if(num2!==0){
+        return num1 / num2
+    }
+    else{
+        return "cannot divide by zero!"
+    }
+}
+//a function to operate on two numbers given a operator
+function operate(num1,operator,num2){
+    switch(operator){
+        case "add":
+            return add(num1, num2);
+            
+        case "substract":
+            return substract(num1, num2);
+            
+        case "multiply":
+            return multiply(num1, num2);
+            
+        case "divide":
+            return divide(num1, num2);
+            
+        default:
+            return "invalid operator"
+            
+    }
 }

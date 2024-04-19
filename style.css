@@ -1,0 +1,16 @@
+.calculator-frame{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.numpad{
+    display: flex;
+    width: 120px;
+    flex-wrap: wrap;
+}
+.operations{
+    display: flex;
+}
+.evaluate{
+    display: flex;
+}
