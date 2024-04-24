@@ -1,16 +1,17 @@
-.calculator-frame{
+.calculator{
     display: flex;
     flex-direction: column;
     align-items: center;
+    border: solid 2px green;
 }
 .numpad{
-    display: flex;
-    width: 120px;
-    flex-wrap: wrap;
-}
-.operations{
+    border: solid 2px red;
     display: flex;
 }
-.evaluate{
+.operators{
+    border: solid 2px blue;
+    display: flex;
+}
+.end-operations{
     display: flex;
 }
