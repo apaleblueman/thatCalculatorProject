@@ -1,94 +1,77 @@
 //global variables
-let firstNumber = '';
-let secondNumber = '';
-let operator = '';
 
-let display = document.querySelector(".output");
+firstNumber = '';
+secondNumber = '';
+operator ='';
+let outputHere = document.querySelector(".output");
 
-main();
-
-
-//main function
-function main(){
-    let numbers = document.querySelector(".numpad"); 
-    numbers.addEventListener('click', (event)=>{
-        let target = event.target;        
-        populateDisplay(display, target.textContent);
-    })
-
-    let operators = document.querySelector(".operators");
-    //if opereator is clicked save display value in first number and 
-    //save clicked operator in operator variable
-    operators.addEventListener('click', (e)=>{
-        let target = e.target;
-    
-        if(!operator){
-
-            firstNumber = display.textContent;
-            display.textContent = ''
-            operator = target.id;
-
-        }
-        else if(operator){
-                
-                secondNumber = display.textContent;
-                display.textContent = ''
-                firstNumber = operate(firstNumber, operator, secondNumber);
-                secondNumber = '';
-                populateDisplay(display, firstNumber)
-                operator = target.id
-        }
-    })
-
-    let results = document.querySelector(".end-operations");
-    results.addEventListener('click', (e)=>{
-        let target = e.target;
-        if(target.id === "equal"){
-            secondNumber = display.textContent;
-            display.textContent = ''
-            firstNumber = operate(firstNumber, operator, secondNumber);
-            secondNumber = '';
-            populateDisplay(display, firstNumber)
-            operator = ''
-        }
-        else if(target.id === "clear"){
-            firstNumber = '';
-            secondNumber = '';
-            operator = '';
-            display.textContent = '';
-            console.log("clear everyoone")
-        }
-    })
-}
+populateDisplay();
+handleOperatorClicks();
 //functions
 
+function populateDisplay(){
+    
+    
+    let buttonClicked = document.querySelector(".numpad");
 
-//populate display
-function populateDisplay(display, content){
-    if (display.textContent === String(firstNumber)) {
-        // If the display shows the result of the previous operation,
-        // clear it before appending the new number
-        display.textContent = content;
-    } else {
-        // Otherwise, append the number to the display
-        display.textContent += content;
-    }
+    buttonClicked.addEventListener('click', (e)=>{
+        let target = e.target;
+        let buttonValue = target.textContent;
+        if(buttonValue.length <2){
+            if(outputHere.textContent === String(firstNumber)){
+                outputHere.textContent = buttonValue    
+            }
+            else{
+                outputHere.textContent += buttonValue;
+            }
+        }
+
+
+    });
+}
+
+function handleOperatorClicks(){
+    let operators = document.querySelector(".operators");
+    operators.addEventListener('click', (e)=>{
+        
+        let target = e.target;
+        if(!firstNumber && !operator){
+            firstNumber = outputHere.textContent;
+            operator = target.id;
+            
+        }
+        else if(firstNumber && operator && !secondNumber){
+
+            secondNumber = outputHere.textContent;
+            outputHere.textContent = '';
+            console.log("evaluate the result!put it in display and clear all global vars execpt operator")
+            
+            firstNumber = evaluate(firstNumber, operator,secondNumber);
+            outputHere.textContent = firstNumber;
+            operator = target.id;
+            secondNumber = '';
+            
+        }
+        // outputHere.textContent = '';
+
+    })
 }
 
 //operate
-function operate(firstNumber, operator, secondNumber){
-    switch(operator){
+function evaluate(firstNum, operator, secondNum) {
+    switch(operator) {
         case 'add':
-            return add(firstNumber, secondNumber)
-        case 'substract':
-            return substract(firstNumber, secondNumber)
+            return add(firstNum, secondNum);
+        case 'subtract':
+            return subtract(firstNum, secondNum);
         case 'multiply':
-            return multiply(firstNumber, secondNumber)
+            return multiply(firstNum, secondNum);
         case 'divide':
-            return divide(firstNumber, secondNumber)
+            return divide(firstNum, secondNum);
+        default:
+            return "Invalid operator";
     }
 }
-
 
 
 //calculations
@@ -97,7 +80,7 @@ function add(firstNum, secondNum){
     return Number(firstNum) + Number(secondNum);
 }
 
-function substract(firstNum, secondNum){
+function subtract(firstNum, secondNum){
     return Number(firstNum) - Number(secondNum);
 }
 
