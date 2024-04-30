@@ -7,6 +7,7 @@ let outputHere = document.querySelector(".output");
 
 populateDisplay();
 handleOperatorClicks();
+handleEndOperations();
 //functions
 
 function populateDisplay(){
@@ -37,14 +38,14 @@ function handleOperatorClicks(){
         let target = e.target;
         if(!firstNumber && !operator){
             firstNumber = outputHere.textContent;
-            operator = target.id;
+            operator = target.id; 
             
         }
         else if(firstNumber && operator && !secondNumber){
 
             secondNumber = outputHere.textContent;
             outputHere.textContent = '';
-            console.log("evaluate the result!put it in display and clear all global vars execpt operator")
+            // console.log("evaluate the result!put it in display and clear all global vars execpt operator")
             
             firstNumber = evaluate(firstNumber, operator,secondNumber);
             outputHere.textContent = firstNumber;
@@ -52,11 +53,31 @@ function handleOperatorClicks(){
             secondNumber = '';
             
         }
-        // outputHere.textContent = '';
+        
 
     })
 }
 
+function handleEndOperations(){
+    let endOps = document.querySelector(".end-operations");
+    endOps.addEventListener('click', (e)=>{
+        let target = e.target;
+        if(target.id === "equal"){
+            secondNumber = outputHere.textContent;
+            outputHere.textContent = '';
+            firstNumber = evaluate(firstNumber, operator,secondNumber);
+            outputHere.textContent = firstNumber;
+  
+            secondNumber = '';
+        }
+        else{
+            firstNumber = '';
+            secondNumber = '';
+            operator = '';
+            outputHere.innerHTML = "&nbsp";
+        }
+    })
+}
 //operate
 function evaluate(firstNum, operator, secondNum) {
     switch(operator) {
