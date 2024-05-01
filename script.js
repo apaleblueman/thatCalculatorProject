@@ -11,21 +11,22 @@ handleEndOperations();
 //functions
 
 function populateDisplay(){
-    
-    
+      
     let buttonClicked = document.querySelector(".numpad");
 
     buttonClicked.addEventListener('click', (e)=>{
         let target = e.target;
         let buttonValue = target.textContent;
+        if((outputHere.textContent.length)<9){
         if(buttonValue.length <2){
             if(outputHere.textContent === String(firstNumber)){
                 outputHere.textContent = buttonValue    
+
             }
             else{
                 outputHere.textContent += buttonValue;
             }
-        }
+        }}
 
 
     });
@@ -90,7 +91,7 @@ function evaluate(firstNum, operator, secondNum) {
         case 'multiply':
             return multiply(firstNum, secondNum);
         case 'divide':
-            return divide(firstNum, secondNum);
+            return divide(firstNum, secondNum).toFixed(2);
         default:
             return "Invalid operator";
     }

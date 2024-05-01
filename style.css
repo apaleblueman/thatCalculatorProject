@@ -24,6 +24,7 @@ body{
     padding: 5px;
     text-align: end;
     background-color: #ffffff;
+    text-overflow: none;
 }
 .numpad{
     background-color: rgba(71, 69, 69, 0.501);
