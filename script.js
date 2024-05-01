@@ -51,9 +51,11 @@ function handleOperatorClicks(){
             outputHere.textContent = firstNumber;
             operator = target.id;
             secondNumber = '';
-            
         }
-        
+        else if(firstNumber && !operator && !secondNumber)
+        {
+            operator = target.id;
+        }
 
     })
 }
@@ -67,10 +69,10 @@ function handleEndOperations(){
             outputHere.textContent = '';
             firstNumber = evaluate(firstNumber, operator,secondNumber);
             outputHere.textContent = firstNumber;
-  
+            operator = '';
             secondNumber = '';
         }
-        else{
+        else if(target.id === "clear"){
             firstNumber = '';
             secondNumber = '';
             operator = '';
