@@ -91,7 +91,12 @@ function evaluate(firstNum, operator, secondNum) {
         case 'multiply':
             return multiply(firstNum, secondNum);
         case 'divide':
-            return divide(firstNum, secondNum).toFixed(2);
+            if (secondNum != 0){
+                return divide(firstNum, secondNum).toFixed(2);
+            }
+            else{
+                return divide(firstNum, secondNum);
+            }
         default:
             return "Invalid operator";
     }
